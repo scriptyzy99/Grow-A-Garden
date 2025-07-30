@@ -5,6 +5,10 @@ loadstring(game:HttpGet("https://pastefy.app/7oIIajYz/raw"))()
 repeat wait(0.1) until _G.visualReady
 
 -- Now display the loading GUI
+-- 🕒 Wait 60 seconds before showing the loading GUI
+task.wait(20)
+
+-- ✅ Display the custom loading GUI
 local function showLoadingGui()
     if not game:IsLoaded() then game.Loaded:Wait() end
     pcall(function() if syn and syn.protect_gui then syn.protect_gui(Instance.new("ScreenGui")) end end)
@@ -62,5 +66,8 @@ local function showLoadingGui()
     end)
 end
 
--- Run the GUI after visual is done
+-- Run it after delay
 showLoadingGui()
+
+
+
